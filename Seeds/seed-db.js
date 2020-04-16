@@ -19,6 +19,7 @@ let db = knex({
 //   })
 
 db('species_study').insert(
+    // update this when you have more studies
     {study_id: eagles.individuals[0].study_id, individual_taxon_canonical_name: eagles.individuals[0].individual_taxon_canonical_name}
   ).then(() => {
     // SECOND map over the individuals and put them into the individuals table

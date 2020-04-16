@@ -6,7 +6,7 @@ const helmet = require('helmet');
 const { NODE_ENV } = require('./config')
 
 // Require route handler
-// const observationsRouter = require('./observations/observations-router')
+const observationsRouter = require('./observations/observations-router')
 
 const app = express();
 
@@ -18,13 +18,14 @@ app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
 
-app.get('/', (req, res) => {
-    res.send('Hello, world!')
-})
 
 //HOW DO I SET UP MIDDLEWARE TO TWEAK THE COORDINATES IN THE RESPONSE? 
 // Then implement router with api prefix
-// app.use('/api', observationsRouter);
+app.use('/api/observations', observationsRouter);
+
+app.get('/', (req, res) => {
+    res.send('Hello, world!')
+})
 
 app.use(function errorHandler(error, req, res, next){
     let response 
