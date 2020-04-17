@@ -5,6 +5,7 @@ const observationsRouter = express.Router()
 
 observationsRouter
     .route('/')
+    // MAYBE ADD MIDDLEWARE HERE TO CONVERT DATA TO GEOJSON FC AND ADD NOISE. MAYBE EVEN SEPARATE INDIVIDUALS
     .get((req, res, next) => {
         ObservationsService.getAllObservations(
             req.app.get('db')
