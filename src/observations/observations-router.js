@@ -12,8 +12,8 @@ observationsRouter
         )
             .then(observations => {
                 // change observations here
-                // get random number -.9 to +.9 and multiply to make it smaller 
-                // I THINK that multiplying by 0.1 would make this +/- about 1 km
+                // get random number -.9 to +.9 and multiply to make it smaller - CHANGE
+                // I THINK that multiplying by 0.01 would make this +/- about 1 km
                 const changeCoords = (observation) => {
                     const randLat = ((Math.random() - 0.5) * 2 ) * 0.1;
                     const randLon = ((Math.random() - 0.5) * 2 ) * 0.1;

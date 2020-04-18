@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -17,7 +17,6 @@ const morganOption = (NODE_ENV === 'production')
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
-
 
 //HOW DO I SET UP MIDDLEWARE TO TWEAK THE COORDINATES IN THE RESPONSE? 
 // Then implement router with api prefix
