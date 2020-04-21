@@ -23,43 +23,43 @@ const params = {
     timestamp_end: '1587430184970'
 }
 
-// WHAT THE HECK IS GOING ON HERE??? I NEED TO GET THE JSON DATA AND PASS IT ALONG TO PUT INTO THE DB
-
-// FROM MANISH
 callSomeFunction = (response) => {
-    // console.log(response)
+    console.log(response)
+    console.log('putting it into the db... ')
+
+    db('species_study').insert(
+        // update this when you have more studies
+        {study_id: eagles.individuals[0].study_id, individual_taxon_canonical_name: eagles.individuals[0].individual_taxon_canonical_name}
+      ).then(() => {
+        // SECOND map over the individuals and put them into the individuals table
+        eagles.individuals.forEach(ind => {
+            //this works
+            db('individuals').insert({
+                individual_local_identifier: ind.individual_local_identifier,
+                study_id: ind.study_id
+            })
+            // THIRD Within that individual, map over locations and put data into observations
+            .then(()=> {
+                  ind.locations.forEach(obs => {
+                    db('observations').insert({
+                        individual_id: ind.individual_local_identifier,
+                        time_stamp: obs.timestamp,
+                        location_long: obs.location_long,
+                        location_lat: obs.location_lat, 
+                        heading: obs.heading,
+                        ground_speed: obs.ground_speed
+                    }).then(() => {console.log(`We inserted ${JSON.stringify(obs)}`)})
+                })
+            })
+        })
+      })
    }
    
 const eagles = API.fetchData(params, callSomeFunction );
 
-// console.log(eagles) // RETURNS UNDEFINED SO NO SURPRISE THE REST OF THE SCRIPT FAILS
 
-db('species_study').insert(
-    // update this when you have more studies
-    {study_id: eagles.individuals[0].study_id, individual_taxon_canonical_name: eagles.individuals[0].individual_taxon_canonical_name}
-  ).then(() => {
-    // SECOND map over the individuals and put them into the individuals table
-    eagles.individuals.forEach(ind => {
-        //this works
-        db('individuals').insert({
-            individual_local_identifier: ind.individual_local_identifier,
-            study_id: ind.study_id
-        })
-        // THIRD Within that individual, map over locations and put data into observations
-        .then(()=> {
-              ind.locations.forEach(obs => {
-                db('observations').insert({
-                    individual_id: ind.individual_local_identifier,
-                    time_stamp: obs.timestamp,
-                    location_long: obs.location_long,
-                    location_lat: obs.location_lat, 
-                    heading: obs.heading,
-                    ground_speed: obs.ground_speed
-                }).then(() => {console.log(`We inserted ${JSON.stringify(obs)}`)})
-            })
-        })
-    })
-  })
+
+
 
 
   

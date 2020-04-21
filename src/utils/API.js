@@ -23,7 +23,7 @@ const fetchData = (params, callSomeFunction) => {
           }
     })
     .then(function(response) {
-        console.log(response.data)
+        // console.log(response.data)
         callSomeFunction(response.data);
       })
     .catch(function(error) {
