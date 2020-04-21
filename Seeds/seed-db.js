@@ -23,8 +23,8 @@ const params = {
     timestamp_end: '1587430184970'
 }
 
-callSomeFunction = (response) => {
-    console.log(response)
+callSomeFunction = (eagles) => {
+    console.log(eagles)
     console.log('putting it into the db... ')
 
     db('species_study').insert(
