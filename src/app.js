@@ -18,7 +18,6 @@ app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
 
-//HOW DO I SET UP MIDDLEWARE TO TWEAK THE COORDINATES IN THE RESPONSE? 
 // Then implement router with api prefix
 app.use('/api/observations', observationsRouter);
 

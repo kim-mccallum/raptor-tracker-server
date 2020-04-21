@@ -1,7 +1,8 @@
 
+require('dotenv').config();
 const knex = require('knex');
-// const app = require('../src/app');
-const { eagles } = require('./golden-eagle-data-test');
+const API = require('../src/utils/API.js')
+// const { eagles } = require('./golden-eagle-data-test');
 const { DATABASE_URL } = require('../src/config');
 
 let db = knex({
@@ -13,10 +14,25 @@ let db = knex({
 //   // Add error handling
 //   // Add robust logging in addition to error handling so that we can go back and check/troubleshoot
 //   // What happened, error message, etc. What if your Cron job crashes?
-//   .then(() => {
-//     db.destroy();
-//     console.log('Hoorah!')
-//   })
+
+const params = {
+    study_id: '296675205',
+    sensor_type:'gps',
+    max_events_per_individual: '5',
+    timestamp_start: '1580540400000',
+    timestamp_end: '1587430184970'
+}
+
+// WHAT THE HECK IS GOING ON HERE??? I NEED TO GET THE JSON DATA AND PASS IT ALONG TO PUT INTO THE DB
+
+// FROM MANISH
+callSomeFunction = (response) => {
+    // console.log(response)
+   }
+   
+const eagles = API.fetchData(params, callSomeFunction );
+
+// console.log(eagles) // RETURNS UNDEFINED SO NO SURPRISE THE REST OF THE SCRIPT FAILS
 
 db('species_study').insert(
     // update this when you have more studies
