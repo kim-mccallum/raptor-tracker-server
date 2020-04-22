@@ -15,12 +15,16 @@ let db = knex({
 //   // Add robust logging in addition to error handling so that we can go back and check/troubleshoot
 //   // What happened, error message, etc. What if your Cron job crashes?
 
+//Dates for the most recent non-nesting season
+const timestamp_start = new Date('2019-07-15').getTime()
+const timestamp_end = new Date('2020-02-01').getTime()
+
 const params = {
     study_id: '296675205',
     sensor_type:'gps',
-    max_events_per_individual: '5',
-    timestamp_start: '1580540400000',
-    timestamp_end: '1587430184970'
+    // max_events_per_individual: '10',
+    // timestamp_start,
+    // timestamp_end
 }
 
 callSomeFunction = (eagles) => {
