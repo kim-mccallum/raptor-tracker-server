@@ -22,9 +22,11 @@ const timestamp_end = new Date('2020-02-01').getTime()
 const params = {
     study_id: '296675205',
     sensor_type:'gps',
-    // max_events_per_individual: '10',
-    // timestamp_start,
-    // timestamp_end
+    max_events_per_individual: '5',
+    attributes: 'timestamp, location_long, location_lat, ground_speed, heading',
+    // attributes: 'all',
+    timestamp_start,
+    timestamp_end
 }
 
 callSomeFunction = (eagles) => {

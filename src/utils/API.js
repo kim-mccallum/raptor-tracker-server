@@ -9,7 +9,7 @@ const axios = require('axios');
 
 const fetchData = (params, callSomeFunction) => {
     const url = 'https://www.movebank.org/movebank/service/json-auth'
-    const username = process.env.MB_USERNAME;;
+    const username = process.env.MB_USERNAME;
     const password = process.env.PASSWORD;
 
     axios({
@@ -23,8 +23,8 @@ const fetchData = (params, callSomeFunction) => {
           }
     })
     .then(function(response) {
-        // console.log(response.data)
-        callSomeFunction(response.data);
+        console.log(response.data.individuals[0].locations)
+        // callSomeFunction(response.data);
       })
     .catch(function(error) {
         console.log(error);
