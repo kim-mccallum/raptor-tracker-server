@@ -20,13 +20,13 @@ const timestamp_start = new Date('2019-07-15').getTime()
 const timestamp_end = new Date('2020-02-01').getTime()
 
 const params = {
-    study_id: '296675205',
+    study_id: '473993694',
     sensor_type:'gps',
-    max_events_per_individual: '5',
+    // max_events_per_individual: '5',
     attributes: 'timestamp, location_long, location_lat, ground_speed, heading',
     // attributes: 'all',
-    timestamp_start,
-    timestamp_end
+    // timestamp_start,
+    // timestamp_end
 }
 
 callSomeFunction = (eagles) => {
@@ -47,14 +47,17 @@ callSomeFunction = (eagles) => {
             // THIRD Within that individual, map over locations and put data into observations
             .then(()=> {
                   ind.locations.forEach(obs => {
-                    db('observations').insert({
-                        individual_id: ind.individual_local_identifier,
-                        time_stamp: obs.timestamp,
-                        location_long: obs.location_long,
-                        location_lat: obs.location_lat, 
-                        heading: obs.heading,
-                        ground_speed: obs.ground_speed
-                    }).then(() => {console.log(`We inserted ${JSON.stringify(obs)}`)})
+                    //   Leave out erroneous timestamps in the future
+                    if(Number(obs.timestamp) < new Date().getTime()){
+                        db('observations').insert({
+                            individual_id: ind.individual_local_identifier,
+                            time_stamp: obs.timestamp,
+                            location_long: obs.location_long,
+                            location_lat: obs.location_lat, 
+                            heading: obs.heading,
+                            ground_speed: obs.ground_speed
+                        }).then(() => {console.log(`We inserted ${JSON.stringify(obs)}`)})
+                      }
                 })
             })
         })

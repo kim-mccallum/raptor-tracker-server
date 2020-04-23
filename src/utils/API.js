@@ -23,8 +23,8 @@ const fetchData = (params, callSomeFunction) => {
           }
     })
     .then(function(response) {
-        console.log(response.data.individuals[0].locations)
-        // callSomeFunction(response.data);
+        // console.log(response.data.individuals[0].locations)
+        callSomeFunction(response.data);
       })
     .catch(function(error) {
         console.log(error);
