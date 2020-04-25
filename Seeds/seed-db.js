@@ -15,18 +15,18 @@ let db = knex({
 //   // Add robust logging in addition to error handling so that we can go back and check/troubleshoot
 //   // What happened, error message, etc. What if your Cron job crashes?
 
-//Dates for the most recent non-nesting season
-const timestamp_start = new Date('2019-07-15').getTime()
-const timestamp_end = new Date('2020-02-01').getTime()
+//Dates to get
+const timestamp_start = new Date('2020-01-01').getTime()
+const timestamp_end = new Date().getTime()
 
 const params = {
     study_id: '473993694',
     sensor_type:'gps',
     // max_events_per_individual: '5',
-    attributes: 'timestamp, location_long, location_lat, ground_speed, heading',
-    // attributes: 'all',
-    // timestamp_start,
-    // timestamp_end
+    // attributes: 'timestamp, location_long, location_lat, ground_speed, heading',
+    attributes: 'all',
+    timestamp_start,
+    timestamp_end
 }
 
 callSomeFunction = (eagles) => {
@@ -51,7 +51,7 @@ callSomeFunction = (eagles) => {
                     if(Number(obs.timestamp) < new Date().getTime()){
                         db('observations').insert({
                             individual_id: ind.individual_local_identifier,
-                            time_stamp: obs.timestamp,
+                            time_stamp: new Date(parseInt(obs.timestamp)).toISOString(),
                             location_long: obs.location_long,
                             location_lat: obs.location_lat, 
                             heading: obs.heading,

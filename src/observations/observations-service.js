@@ -1,6 +1,35 @@
 const ObservationsService = { 
+    getOneObservationPerDay(knex, query){
+        let { individual_id, start_time, end_time } = query;
+
+        if(start_time){
+            start_time = new Date(parseInt(start_time)).toISOString();
+        }
+        if(end_time){
+            end_time = new Date(parseInt(end_time)).toISOString();
+        }
+
+        // return knex.raw(`SELECT DISTINCT ON (individual_id, time_stamp::date) * FROM observations WHERE time_stamp BETWEEN '2020-01-09 01:00:00' AND '2020-01-13 01:00:00' ORDER BY individual_id, time_stamp::date, time_stamp;`)
+        // return knex('observations')
+        //     .distinct('individual_id', knex.raw('time_stamp::date'))
+        //     .whereBetween('time_stamp', [start_time, end_time])
+        //     .orderBy('individual_id', knex.raw('time_stamp::date'), 'time_stamp')
+        //     .first()
+        knex.raw(`SELECT DISTINCT ON (individual_id, time_stamp::date) * FROM observations WHERE time_stamp BETWEEN '2020-01-09 01:00:00' AND '2020-01-13 01:00:00' ORDER BY individual_id, time_stamp::date, time_stamp;`)
+            .then((result) => {
+            return result.rows
+          })
+    },
     getAllObservations(knex, query){
-        const { individual_id, start_time, end_time } = query 
+        let { individual_id, start_time, end_time } = query;
+        console.log(start_time)
+
+        if(start_time){
+            start_time = new Date(parseInt(start_time)).toISOString();
+        }
+        if(end_time){
+            end_time = new Date(parseInt(end_time)).toISOString();
+        }
 
         if(individual_id && start_time && end_time ){
             return knex.from('observations').select('*')
