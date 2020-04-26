@@ -8,17 +8,26 @@ const ObservationsService = {
         if(end_time){
             end_time = new Date(parseInt(end_time)).toISOString();
         }
-
-        // return knex.raw(`SELECT DISTINCT ON (individual_id, time_stamp::date) * FROM observations WHERE time_stamp BETWEEN '2020-01-09 01:00:00' AND '2020-01-13 01:00:00' ORDER BY individual_id, time_stamp::date, time_stamp;`)
-        // return knex('observations')
+        //  // Try again
+        // let outquery = knex('observations')
         //     .distinct('individual_id', knex.raw('time_stamp::date'))
-        //     .whereBetween('time_stamp', [start_time, end_time])
-        //     .orderBy('individual_id', knex.raw('time_stamp::date'), 'time_stamp')
+        //     .orderBy('individual_id', 'time_stamp::date')
         //     .first()
-        knex.raw(`SELECT DISTINCT ON (individual_id, time_stamp::date) * FROM observations WHERE time_stamp BETWEEN '2020-01-09 01:00:00' AND '2020-01-13 01:00:00' ORDER BY individual_id, time_stamp::date, time_stamp;`)
-            .then((result) => {
-            return result.rows
-          })
+
+        //     if (start_time && end_time) {
+        //         outquery = outquery.whereBetween('time_stamp', [start_time, end_time])
+        //     }
+        //     console.log(`here is the outquery ${outquery}`)
+
+        //     return outquery
+
+        return knex.raw(`SELECT DISTINCT ON (individual_id, time_stamp::date) * FROM observations WHERE time_stamp BETWEEN '2020-01-09 01:00:00' AND '2020-01-13 01:00:00' ORDER BY individual_id, time_stamp::date, time_stamp;`)
+
+        // // Try again
+        // knex.raw(`SELECT DISTINCT ON (individual_id, time_stamp::date) * FROM observations WHERE time_stamp BETWEEN '2020-01-09 01:00:00' AND '2020-01-13 01:00:00' ORDER BY individual_id, time_stamp::date, time_stamp;`)
+        //     .then((result) => {
+        //     return result.rows
+        //   })
     },
     getAllObservations(knex, query){
         let { individual_id, start_time, end_time } = query;

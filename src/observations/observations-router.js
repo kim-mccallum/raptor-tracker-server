@@ -19,6 +19,7 @@ observationsRouter
             req.app.get('db'), req.query
         )
             .then(observations => {
+                console.log(`here are the observations ${observations.rows.length}`)
                 observations.forEach(obs => {
                     // console.log('changing coords')
                     changeCoords(obs)
