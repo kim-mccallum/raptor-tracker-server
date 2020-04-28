@@ -1,5 +1,5 @@
 const ObservationsService = { 
-    // This one works and just returns the records from the observations table
+    // This one works and just returns the records from the observations table - NO JOIN
     getAllObservations(knex, query){
         let { individual_id, start_time, end_time } = query;
         console.log(start_time)
@@ -46,11 +46,10 @@ const ObservationsService = {
 
         return knex.select('*').from('observations')
     },
-    // Replicate the getAllObservations function above BUT figure out how to join the individual data
+    // Same as above but joins the species data by individual
     // Join on 'individual_local_identifier' (FK) and add: individual_taxon_canonical_name (aka species) and study_id
     getAllObservationsJoin(knex, query){
         let { individual_id, start_time, end_time } = query;
-        // get everything from observations with the species joined from the individuals table
         if(start_time){
             start_time = new Date(parseInt(start_time)).toISOString();
         }
