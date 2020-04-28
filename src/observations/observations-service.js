@@ -102,12 +102,11 @@ const ObservationsService = {
                 .innerJoin('individuals', 'observations.individual_id','individuals.individual_local_identifier')                
     },
     getLastObservationById(knex){
-        //THIS RETURNS THE RECORD WITH THE MAX TIMESTAMP FOR EACH INDIVIDUAL
-        return knex.raw('SELECT * FROM observations t1 WHERE (t1.individual_id, t1.time_stamp) = ANY(SELECT t2.individual_id, max(t2.time_stamp) FROM observations t2 GROUP BY t2.individual_id);')
+        return knex.raw('SELECT * FROM (SELECT * FROM observations t1 WHERE (t1.individual_id, t1.time_stamp) = ANY(SELECT t2.individual_id, max(t2.time_stamp) FROM observations t2 GROUP BY t2.individual_id)) raptors JOIN individuals ON raptors.individual_id = individuals.individual_local_identifier;')
     },
     getFirstObservationById(knex){
         //THIS RETURNS THE RECORD WITH THE MIN TIMESTAMP FOR EACH INDIVIDUAL
-        return knex.raw('SELECT * FROM observations t1 WHERE (t1.individual_id, t1.time_stamp) = ANY(SELECT t2.individual_id, min(t2.time_stamp) FROM observations t2 GROUP BY t2.individual_id);')
+        return knex.raw('SELECT * FROM (SELECT * FROM observations t1 WHERE (t1.individual_id, t1.time_stamp) = ANY(SELECT t2.individual_id, min(t2.time_stamp) FROM observations t2 GROUP BY t2.individual_id)) raptors JOIN individuals ON raptors.individual_id = individuals.individual_local_identifier;')
     }
 }
 

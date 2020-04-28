@@ -35,6 +35,7 @@ observationsRouter
             req.app.get('db')
         )
             .then(observations => {
+                observations = observations
                 observations = observations.rows
                 observations.forEach(obs => {
                     changeCoords(obs)
@@ -44,6 +45,7 @@ observationsRouter
             })
             .catch(next)
     })
+
 observationsRouter
     .route('/first')
     .get((req, res, next) => {
