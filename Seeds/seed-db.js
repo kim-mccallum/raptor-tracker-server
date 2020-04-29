@@ -19,9 +19,9 @@ let db = knex({
 const timestamp_start = new Date('2020-01-01').getTime()
 const timestamp_end = new Date().getTime()
 // Vultures
-// const study_id = '473993694'
+const study_id = '473993694'
 // Golden eagles
-const study_id = '296675205'
+// const study_id = '296675205'
 
 const params = {
     study_id: study_id,
