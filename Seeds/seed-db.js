@@ -16,11 +16,11 @@ let db = knex({
 //   // What happened, error message, etc. What if your Cron job crashes?
 
 //Dates to get
-const timestamp_start = new Date('2020-01-01').getTime()
-const timestamp_end =  new Date('2020-02-01').getTime()
+const timestamp_start = new Date('2019-01-01').getTime()
+const timestamp_end =  new Date('2020-04-30').getTime()
 // const timestamp_end = new Date().getTime()
 // const studyIds = ['473993694', '296675205']
-studyId = '473993694'
+studyId = '296675205'
 
 let params = {
     study_id: studyId,

@@ -1,51 +1,4 @@
 const ObservationsService = { 
-    // This one works and just returns the records from the observations table - NO JOIN
-    getAllObservations(knex, query){
-        let { individual_id, start_time, end_time } = query;
-
-        if(start_time){
-            start_time = new Date(parseInt(start_time)).toISOString();
-        }
-        if(end_time){
-            end_time = new Date(parseInt(end_time)).toISOString();
-        }
-
-        if(individual_id && start_time && end_time ){
-            return knex.from('observations').select('*')
-            .where('individual_id', individual_id)
-            .where('time_stamp', '>=', start_time)
-            .where('time_stamp', '<=', end_time)
-        }
-        else if(start_time && end_time ){
-            return knex.from('observations').select('*')
-            .where('time_stamp', '>=', start_time)
-            .where('time_stamp', '<=', end_time)
-        }
-        else if(start_time && individual_id){
-            return knex.from('observations').select('*')
-            .where('individual_id', individual_id)            
-            .where('time_stamp', '>=', start_time)
-        }
-        else if(end_time && individual_id){
-            return knex.from('observations').select('*')
-            .where('individual_id', individual_id)  
-            .where('time_stamp', '<=', end_time)
-        }
-        else if(start_time){
-            return knex.from('observations').select('*')       
-            .where('time_stamp', '>=', start_time)
-        }
-        else if(end_time){
-            return knex.from('observations').select('*')  
-            .where('time_stamp', '<=', end_time)
-        }
-        else if(individual_id){
-            return knex.from('observations').select('*').where('individual_id', individual_id)
-        }
-
-        return knex.select('*').from('observations')
-    },
-    // Same as above but joins the species data by individual
     // Join on 'individual_local_identifier' (FK) and add: individual_taxon_canonical_name (aka species) and study_id
     getAllObservationsJoin(knex, query){
         let { individual_id, start_time, end_time, study_id } = query;
@@ -65,11 +18,12 @@ const ObservationsService = {
             .where('time_stamp', '>=', start_time)
             .where('time_stamp', '<=', end_time)
         }
-        else if(start_time && end_time ){
+        else if(study_id && start_time && end_time ){
             return knex.from('observations')
             .innerJoin('individuals', 'observations.individual_id','individuals.individual_local_identifier')
             .where('time_stamp', '>=', start_time)
             .where('time_stamp', '<=', end_time)
+            .where('individuals.study_id', '=', study_id)
         }
         else if(start_time && individual_id){
             return knex.from('observations')
@@ -83,15 +37,17 @@ const ObservationsService = {
             .where('individual_id', individual_id)  
             .where('time_stamp', '<=', end_time)
         }
-        else if(start_time){
+        else if(study_id && start_time){
             return knex.from('observations')
             .innerJoin('individuals', 'observations.individual_id','individuals.individual_local_identifier')     
             .where('time_stamp', '>=', start_time)
+            .where('individuals.study_id', '=', study_id)
         }
-        else if(end_time){
+        else if(study_id && end_time){
             return knex.from('observations')
             .innerJoin('individuals', 'observations.individual_id','individuals.individual_local_identifier') 
             .where('time_stamp', '<=', end_time)
+            .where('individuals.study_id', '=', study_id)
         }
         else if(individual_id){
             return knex.from('observations')
@@ -102,7 +58,7 @@ const ObservationsService = {
         else if(study_id){
             return knex.from('observations')
             .innerJoin('individuals', 'observations.individual_id','individuals.individual_local_identifier')
-            .where('study_id', study_id)
+            .where('individuals.study_id', '=', study_id)
         }
 
         return knex.from('observations')
