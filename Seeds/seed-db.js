@@ -17,14 +17,13 @@ let db = knex({
 
 //Dates to get
 const timestamp_start = new Date('2020-01-01').getTime()
-const timestamp_end = new Date().getTime()
-// Vultures
-const study_id = '473993694'
-// Golden eagles
-// const study_id = '296675205'
+const timestamp_end =  new Date('2020-02-01').getTime()
+// const timestamp_end = new Date().getTime()
+// const studyIds = ['473993694', '296675205']
+studyId = '473993694'
 
-const params = {
-    study_id: study_id,
+let params = {
+    study_id: studyId,
     sensor_type:'gps',
     // max_events_per_individual: '5',
     // attributes: 'timestamp, location_long, location_lat, ground_speed, heading',
@@ -32,8 +31,49 @@ const params = {
     timestamp_start,
     timestamp_end
 }
+// Use this one to seed the old fashioned way
+API.fetchData(params)
+    .then((response) => {
+        console.log('got the data!');
+        insertData(response.data, studyId);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
 
-callSomeFunction = (eagles) => {
+const updateDatabase = async function() {
+    const startDateObj = await db.raw('SELECT time_stamp FROM last_update_time;');
+    const startDateStr = startDateObj.rows[0]['time_stamp'];
+    const startDate = new Date(startDateStr).getTime(); 
+
+    const endDate = new Date().getTime();
+
+    params['timestamp_start'] = startDate;
+    params['timestamp_end'] = endDate;
+
+    studyIds.forEach((studyId) => {
+        params['study_id'] = studyId;
+
+        console.log(`Fetching data for study id ${studyId}`);
+        console.log(params);
+        API.fetchData(params)
+            .then((response) => {
+                console.log('got the data!');
+                insertData(response.data, studyId);
+            })
+           .catch((error) => {
+                console.log(error);
+            });
+    });
+
+    await db.raw("UPDATE last_update_time SET time_stamp = NOW() WHERE id = (SELECT id FROM last_update_time LIMIT 1);");
+}
+
+// updateDatabase();
+
+
+
+insertData = (eagles, study_id) => {
     console.log(eagles)
     console.log('putting it into the db... ')
 
@@ -65,12 +105,22 @@ callSomeFunction = (eagles) => {
                         }).then(() => {console.log(`We inserted ${JSON.stringify(obs)}`)})
                       }
                 })
+            }).catch((error) => {
+                console.log(error)
             })
         })
-      })
+      }).catch((error) => {
+        console.log(error)
+    })
    }
    
-const eagles = API.fetchData(params, callSomeFunction );
+const addDefaultLastUpdateTime = () => {
+    db.raw("INSERT INTO last_update_time (time_stamp) VALUES (TO_TIMESTAMP ('2010-01-01 9:30:20','YYYY-MM-DD HH:MI:SS'));")
+        .then((value) => console.log('Reset with value ' + value))
+        .catch((error) => console.log('Error resetting: ' + error));
+};
+
+
 
 
 

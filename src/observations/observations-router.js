@@ -14,12 +14,13 @@ const changeCoords = (observation) => {
 observationsRouter
     .route('/')
     .get((req, res, next) => {
+
         ObservationsService.getAllObservationsJoin(
         // ObservationsService.getAllObservations(
             req.app.get('db'), req.query
         )
             .then(observations => {
-                console.log(observations)
+                // console.log(observations)
                 observations.forEach(obs => {
                     changeCoords(obs)
                 })

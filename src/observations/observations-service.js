@@ -2,7 +2,6 @@ const ObservationsService = {
     // This one works and just returns the records from the observations table - NO JOIN
     getAllObservations(knex, query){
         let { individual_id, start_time, end_time } = query;
-        console.log(start_time)
 
         if(start_time){
             start_time = new Date(parseInt(start_time)).toISOString();
@@ -49,7 +48,9 @@ const ObservationsService = {
     // Same as above but joins the species data by individual
     // Join on 'individual_local_identifier' (FK) and add: individual_taxon_canonical_name (aka species) and study_id
     getAllObservationsJoin(knex, query){
-        let { individual_id, start_time, end_time } = query;
+        let { individual_id, start_time, end_time, study_id } = query;
+        console.log(query, 'what is here?')
+
         if(start_time){
             start_time = new Date(parseInt(start_time)).toISOString();
         }
@@ -97,6 +98,13 @@ const ObservationsService = {
             .innerJoin('individuals', 'observations.individual_id','individuals.individual_local_identifier')
             .where('individual_id', individual_id)
         }
+        // check to see if study id then return 
+        else if(study_id){
+            return knex.from('observations')
+            .innerJoin('individuals', 'observations.individual_id','individuals.individual_local_identifier')
+            .where('study_id', study_id)
+        }
+
         return knex.from('observations')
                 .innerJoin('individuals', 'observations.individual_id','individuals.individual_local_identifier')                
     },

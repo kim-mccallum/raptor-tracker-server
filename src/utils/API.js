@@ -7,12 +7,12 @@ const axios = require('axios');
 
 // Maybe make a new module for putting the new data into the DB??
 
-const fetchData = (params, callSomeFunction) => {
+const fetchData = (params) => {
     const url = 'https://www.movebank.org/movebank/service/json-auth'
     const username = process.env.MB_USERNAME;
     const password = process.env.PASSWORD;
 
-    axios({
+    return axios({
         method: 'GET',
         url,
         params,
@@ -21,14 +21,14 @@ const fetchData = (params, callSomeFunction) => {
             username,
             password
           }
-    })
-    .then(function(response) {
-        console.log('got the data!')
-        callSomeFunction(response.data);
-      })
-    .catch(function(error) {
-        console.log(error);
     });
+    //.then(function(response) {
+    //    console.log('got the data!')
+    //    callSomeFunction(response.data);
+    //  })
+    //.catch(function(error) {
+    //    console.log(error);
+    //});
 }
 
 module.exports = {
