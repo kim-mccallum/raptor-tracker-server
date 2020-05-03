@@ -1,7 +1,8 @@
+require("dotenv").config();
 const { expect } = require("chai");
 const supertest = require("supertest");
+const app = require("../src/app");
 
-// Am I setting this correctly?
 process.env.NODE_ENV = "test";
 
 global.expect = expect;
