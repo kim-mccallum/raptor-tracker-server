@@ -1,5 +1,8 @@
-const { expect } = require('chai')
-const supertest = require('supertest')
+const { expect } = require("chai");
+const supertest = require("supertest");
 
-global.expect = expect 
-global.supertest = supertest
+// Am I setting this correctly?
+process.env.NODE_ENV = "test";
+
+global.expect = expect;
+global.supertest = supertest;
