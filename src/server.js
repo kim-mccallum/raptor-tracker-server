@@ -4,19 +4,20 @@ const app = require("./app");
 // module includes function to call API - maybe this should also do the db logic and insert into db?
 // const API = require('./utils/API.js')
 
-// const { PORT, DATABASE_URL } = require('./config');
-
-// const db = knex({
-//     client:'pg',
-//     connection: DATABASE_URL,
-// })
-
-const { PORT, TEST_DATABASE_URL } = require("./config");
+const { PORT, DATABASE_URL } = require("./config");
 
 const db = knex({
   client: "pg",
-  connection: TEST_DATABASE_URL,
+  connection: DATABASE_URL,
 });
+
+//// Use this to run your test data base just to get test data - DONE so erase soon
+// const { PORT, TEST_DATABASE_URL } = require("./config");
+
+// const db = knex({
+//   client: "pg",
+//   connection: TEST_DATABASE_URL,
+// });
 
 app.set("db", db);
 
