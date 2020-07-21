@@ -8,11 +8,6 @@ let db = knex({
   client: "pg",
   connection: DATABASE_URL,
 });
-//   // TO DO:
-//   // Figure out how to close the connection - the script is hanging on for some reason
-//   // Add error handling
-//   // Add robust logging in addition to error handling so that we can go back and check/troubleshoot
-//   // What happened, error message, etc. What if your Cron job crashes?
 
 //Dates to get
 const timestamp_start = new Date("2019-01-01").getTime();
@@ -65,6 +60,7 @@ const updateDatabase = async function () {
   });
 };
 
+// change the variable name for eagles to response
 const insertData = async function (eagles, studyId) {
   try {
     // See if this entry is already in the database

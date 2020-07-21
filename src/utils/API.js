@@ -1,5 +1,4 @@
 const axios = require("axios");
-const { eagles } = require("../../Seeds/golden-eagle-data-test");
 
 const fetchData = async function (params) {
   const url = "https://www.movebank.org/movebank/service/json-auth";

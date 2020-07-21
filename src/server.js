@@ -15,7 +15,4 @@ app.set("db", db);
 
 app.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT}`);
-  // setInterval could be used here with API.fetchData() passed as the callback?
-  // setInterval(() => {console.log('ping')}, 1000)
-  // API.fetchData();
 });

@@ -32,6 +32,16 @@ const ObservationsService = {
         .where("time_stamp", ">=", start_time)
         .where("time_stamp", "<=", end_time)
         .where("individuals.study_id", "=", study_id);
+    } else if (start_time && end_time) {
+      return knex
+        .from("observations")
+        .innerJoin(
+          "individuals",
+          "observations.individual_id",
+          "individuals.individual_local_identifier"
+        )
+        .where("time_stamp", ">=", start_time)
+        .where("time_stamp", "<=", end_time);
     } else if (start_time && individual_id) {
       return knex
         .from("observations")

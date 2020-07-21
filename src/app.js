@@ -7,6 +7,7 @@ const { NODE_ENV, CLIENT_ORIGIN } = require("./config");
 console.log(CLIENT_ORIGIN);
 // Require route handler
 const observationsRouter = require("./observations/observations-router");
+const updateDatabaseRouter = require("./update-database-router/update-database-router");
 
 const app = express();
 
@@ -23,6 +24,9 @@ app.use(
 
 // Then implement router with api prefix
 app.use("/api/observations", observationsRouter);
+
+// Then implement router with api prefix for updates
+app.use("/api/update-database", updateDatabaseRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello, world!");
