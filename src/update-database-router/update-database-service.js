@@ -161,11 +161,17 @@ const UpdateService = {
       await updateTimestamp();
       await db.destroy();
 
+      // console.log("here is responseData", responseData);
       // get this and pass it to the frontend and ADD it to the data
       return responseData;
     };
 
-    runUpdate();
+    runUpdate().then((res) => {
+      // figure out how to pass this to router
+      console.log(res);
+      // const promiseRes = new Promise(res)
+      return res;
+    });
   },
 };
 
