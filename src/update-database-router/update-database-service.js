@@ -10,12 +10,13 @@ const UpdateService = {
       client: "pg",
       connection: DATABASE_URL,
     });
-
+    // initiate global variable to return
     let responseData;
 
     //Dates to get
     const timestamp_start = new Date("2019-01-01").getTime();
     const timestamp_end = new Date("2020-04-30").getTime();
+    // African vulture and golden eagles MoveBank study ids
     const studyIds = ["473993694", "296675205"];
 
     let params = {
@@ -166,12 +167,13 @@ const UpdateService = {
       return responseData;
     };
 
-    runUpdate().then((res) => {
-      // figure out how to pass this to router
-      console.log(res);
-      // const promiseRes = new Promise(res)
-      return res;
-    });
+    return new Promise(runUpdate);
+    // runUpdate().then((res) => {
+    //   // figure out how to pass this to router
+    //   console.log("here is the response in the service:", res);
+    //   // const promiseRes = new Promise(res)
+    //   return res;
+    // });
   },
 };
 
