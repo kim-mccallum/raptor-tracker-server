@@ -162,8 +162,6 @@ const UpdateService = {
       await updateTimestamp();
       await db.destroy();
 
-      // console.log("here is responseData", responseData);
-      // get this and pass it to the frontend and ADD it to the data
       return responseData;
     };
 
