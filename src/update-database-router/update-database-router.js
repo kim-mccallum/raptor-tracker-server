@@ -44,9 +44,10 @@ updateDatabaseRouter.route("/").get((req, res, next) => {
 
       const currentDate = new Date().getTime();
       console.log("date check", currentDate - startDate);
-
+      // console.log("date check", currentDate, startDate);
       // if the difference between today and the last date represents more than 1 day in milliseconds
-      if (currentDate - startDate < 8.64e7) {
+      if (currentDate - startDate > 8.64e7) {
+        console.log(`database is out of date and needs to update...`);
         // set up or reset the database with a startime
         await addDefaultLastUpdateTime();
         // update the last date in the database
@@ -67,7 +68,7 @@ updateDatabaseRouter.route("/").get((req, res, next) => {
           const response = await API.fetchData(params);
           // set the data to the global so we can return it
           responseData = response.data;
-
+          console.log(`TESTING`, responseData);
           await insertData(response.data, studyId);
         });
       } else {
